@@ -5,7 +5,7 @@ module "endpoints" {
   security_group_ids = ["sg-12345678"]
 
   endpoints = {
-    s3 = {
+    s3 = { 
       # interface endpoint
       service             = "s3"
       tags                = { Name = "s3-vpc-endpoint" }
