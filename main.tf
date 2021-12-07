@@ -1,5 +1,5 @@
 resource "aws_vpc_endpoint" "this" {
-  for_each = local.endpoints
+  for_each = var.endpoints
 
   vpc_id            = var.vpc_id
   service_name      = data.aws_vpc_endpoint_service.this[each.key].service_name
