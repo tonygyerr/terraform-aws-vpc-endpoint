@@ -1,37 +1,36 @@
 module "endpoints" {
   source = "git::https://github.com/tonygyerr/terraform-aws-vpc-endpoint.git"
 
-  vpc_id             = "vpc-12345678"
-  security_group_ids = ["sg-12345678"]
-
+  create             = var.create
+  
+  vpc_id             = "vpc-01234567890123"
+  security_group_ids = ["${aws_security_group.vpce.id}"]
   endpoints = {
-    s3 = { 
-      # interface endpoint
-      service             = "s3"
-      tags                = { Name = "s3-vpc-endpoint" }
+    s3 = {
+      service         = "s3"
+      service_type    = "Gateway"
+      route_table_ids = ["rtb-01234567890123"]
+      policy          = "${data.aws_iam_policy_document.example.json}"
+      tags            = { Name = "${var.app_name}-s3-vpc-endpoint" }
     },
     dynamodb = {
-      # gateway endpoint
-      service         = "dynamodb"
-      route_table_ids = ["rt-12322456", "rt-43433343", "rt-11223344"]
-      tags            = { Name = "dynamodb-vpc-endpoint" }
+      service = "dynamodb"
+      service_type    = "Gateway"
+      route_table_ids = ["rtb-01234567890123"]
+      tags            = { Name = "${var.app_name}-dynamodb-vpc-endpoint" }
     },
     sns = {
-      service    = "sns"
-      subnet_ids = ["subnet-12345678", "subnet-87654321"]
-      tags       = { Name = "sns-vpc-endpoint" }
+      service         = "sns"
+      subnet_ids      = var.subnet_ids
+      tags            = { Name = "${var.app_name}-s3-sns-endpoint" }
     },
     sqs = {
       service             = "sqs"
       private_dns_enabled = true
-      security_group_ids  = ["sg-987654321"]
-      subnet_ids          = ["subnet-12345678", "subnet-87654321"]
-      tags                = { Name = "sqs-vpc-endpoint" }
+      security_group_ids  = ["${aws_security_group.vpce.id}"]
+      subnet_ids          = var.subnet_ids
+      tags                = { Name = "${var.app_name}-sqs-vpc-endpoint" }
     },
   }
-
-  tags = {
-    Owner       = "user"
-    Environment = "dev"
-  }
+  tags = var.tags
 }

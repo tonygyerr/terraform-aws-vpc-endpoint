@@ -3,10 +3,10 @@ variable "vpc_config" {
   type        = map(string)
 }
 
-variable "app_name" {
-  type        = string
-  description = "Application Name"
-  default     = ""
+variable "endpoints" {
+  description = "A map of interface and/or gateway endpoints containing their properties and configurations"
+  type        = any
+  default     = {}
 }
 
 variable "create" {
@@ -15,9 +15,15 @@ variable "create" {
   default     = null
 }
 
-variable "public_subnet_ids" {
-  description = "list of subnet ids"
-  type        = list
+variable "app_name" {
+  type        = string
+  description = "Application Name"
+  default     = ""
+}
+
+variable "subnet_ids" {
+  description = "Default subnets IDs to associate with the VPC endpoints"
+  type        = list(string)
   default     = []
 }
 
