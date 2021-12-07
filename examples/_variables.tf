@@ -27,6 +27,18 @@ variable "subnet_ids" {
   default     = []
 }
 
+variable "private_route_table_ids" {
+  description = "Private Route Table ids"
+  type        = list(string)
+  default     = []
+}
+
+variable "public_route_table_ids" {
+  description = "Public Route Table ids"
+  type        = list(string)
+  default     = []
+}
+
 variable "extra_tags" {
   type        = map(string)
   description = "optional default tags"

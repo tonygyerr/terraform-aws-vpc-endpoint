@@ -16,6 +16,18 @@ variable "subnet_ids" {
   default     = []
 }
 
+variable "private_route_table_ids" {
+  description = "Private Route Table ids"
+  type        = list(string)
+  default     = []
+}
+
+variable "public_route_table_ids" {
+  description = "Public Route Table ids"
+  type        = list(string)
+  default     = []
+}
+
 variable "endpoints" {
   description = "A map of interface and/or gateway endpoints containing their properties and configurations"
   type        = any
