@@ -10,6 +10,12 @@ variable "vpc_id" {
   default     = null
 }
 
+variable "subnet_ids" {
+  description = "Default subnets IDs to associate with the VPC endpoints"
+  type        = list(string)
+  default     = []
+}
+
 variable "endpoints" {
   description = "A map of interface and/or gateway endpoints containing their properties and configurations"
   type        = any
@@ -18,12 +24,6 @@ variable "endpoints" {
 
 variable "security_group_ids" {
   description = "Default security group IDs to associate with the VPC endpoints"
-  type        = list(string)
-  default     = []
-}
-
-variable "subnet_ids" {
-  description = "Default subnets IDs to associate with the VPC endpoints"
   type        = list(string)
   default     = []
 }
