@@ -3,20 +3,20 @@ module "endpoints" {
 
   create             = var.create
   
-  vpc_id             = "vpc-01234567890123"
+  vpc_id             = var.vpc_config.vpc_id #"vpc-01234567890123"
   security_group_ids = [aws_security_group.vpce.id]
   endpoints = {
     s3 = {
       service         = "s3"
       service_type    = "Gateway"
-      route_table_ids = [var.private_route_table_ids] #["rtb-01234567890123"]
+      route_table_ids = var.private_route_table_ids #["rtb-01234567890123"]
       policy          = data.aws_iam_policy_document.example.json
       tags            = { Name = "${var.app_name}-s3-vpc-endpoint" }
     },
     dynamodb = {
       service = "dynamodb"
       service_type    = "Gateway"
-      route_table_ids = [var.private_route_table_ids] #["rtb-01234567890123"]
+      route_table_ids = var.private_route_table_ids #["rtb-01234567890123"]
       tags            = { Name = "${var.app_name}-dynamodb-vpc-endpoint" }
     },
     sns = {
