@@ -3,26 +3,77 @@ module "endpoints" {
 
   create             = var.create
   
-  vpc_id             = var.vpc_config.vpc_id #"vpc-01234567890123"
+  vpc_id             = var.vpc_config.vpc_id
   security_group_ids = [aws_security_group.vpce.id]
+
   endpoints = {
-    s3 = {
-      service         = "s3"
-      service_type    = "Gateway"
-      route_table_ids = var.private_route_table_ids #["rtb-01234567890123"]
-      policy          = data.aws_iam_policy_document.example.json
-      tags            = { Name = "${var.app_name}-s3-vpc-endpoint" }
-    },
     dynamodb = {
       service = "dynamodb"
+      private_dns_enabled = false
       service_type    = "Gateway"
-      route_table_ids = var.private_route_table_ids #["rtb-01234567890123"]
+      route_table_ids = var.private_route_table_ids
       tags            = { Name = "${var.app_name}-dynamodb-vpc-endpoint" }
     },
-    sns = {
-      service         = "sns"
-      subnet_ids      = var.subnet_ids
-      tags            = { Name = "${var.app_name}-s3-sns-endpoint" }
+    ec2 = {
+      service             = "ec2"
+      private_dns_enabled = true
+      security_group_ids  = [aws_security_group.vpce.id]
+      subnet_ids          = var.subnet_ids
+      tags                = { Name = "${var.app_name}-ec2-vpc-endpoint" }
+    },
+    ec2messages = {
+      service             = "ec2messages"
+      private_dns_enabled = true
+      security_group_ids  = [aws_security_group.vpce.id]
+      subnet_ids          = var.subnet_ids
+      tags                = { Name = "${var.app_name}-ec2messages-vpc-endpoint" }
+    },
+    lambda = {
+      service             = "lambda"
+      private_dns_enabled = true
+      security_group_ids  = [aws_security_group.vpce.id]
+      subnet_ids          = var.subnet_ids
+      tags                = { Name = "${var.app_name}-lambda-vpc-endpoint" }
+    },
+    logs = {
+      service             = "logs"
+      private_dns_enabled = true
+      security_group_ids  = [aws_security_group.vpce.id]
+      subnet_ids          = var.subnet_ids
+      tags                = { Name = "${var.app_name}-logs-vpc-endpoint" }
+    },
+    monitoring = {
+      service             = "monitoring"
+      private_dns_enabled = true
+      security_group_ids  = [aws_security_group.vpce.id]
+      subnet_ids          = var.subnet_ids
+      tags                = { Name = "${var.app_name}-monitoring-vpc-endpoint" }
+    },
+    rds = {
+      service             = "rds"
+      private_dns_enabled = true
+      security_group_ids  = [aws_security_group.vpce.id]
+      subnet_ids          = var.subnet_ids
+      tags                = { Name = "${var.app_name}-rds-vpc-endpoint" }
+    },
+    s3 = {
+      service         = "s3"
+      private_dns_enabled = false
+      service_type    = "Gateway"
+      route_table_ids = var.private_route_table_ids
+      policy          = templatefile("${path.module}/${var.bucket_policy}", {
+        aws_region           = jsonencode(var.aws_region),
+        account_id           = jsonencode(data.aws_caller_identity.current.account_id),
+        aws_role             = jsonencode(var.aws_role),
+      }) 
+      tags            = { Name = "${var.app_name}-s3-vpc-endpoint" }
+    },
+    secretsmanager = {
+      service             = "secretsmanager"
+      private_dns_enabled = true
+      security_group_ids  = [aws_security_group.vpce.id]
+      subnet_ids          = var.subnet_ids
+      tags                = { Name = "${var.app_name}-secretsmanager-vpc-endpoint" }
     },
     sqs = {
       service             = "sqs"
@@ -31,6 +82,21 @@ module "endpoints" {
       subnet_ids          = var.subnet_ids
       tags                = { Name = "${var.app_name}-sqs-vpc-endpoint" }
     },
+    ssm = {
+      service             = "ssm"
+      private_dns_enabled = true
+      security_group_ids  = [aws_security_group.vpce.id]
+      subnet_ids          = var.subnet_ids
+      tags                = { Name = "${var.app_name}-ssm-vpc-endpoint" }
+    },
+    ssmmessages = {
+      service             = "ssmmessages"
+      private_dns_enabled = true
+      security_group_ids  = [aws_security_group.vpce.id]
+      subnet_ids          = var.subnet_ids
+      tags                = { Name = "${var.app_name}-ssmmessages-vpc-endpoint" }
+    },
   }
+
   tags = var.tags
 }

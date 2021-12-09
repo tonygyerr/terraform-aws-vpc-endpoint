@@ -1,0 +1,35 @@
+{
+    "Version": "2012-10-17",
+    "Id": "Policy1639006653324",
+    "Statement": [
+        {
+            "Sid": "Stmt1639006650702",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": [
+                "s3:Get*",
+                "s3:Put*",
+                "s3:List*",
+                "s3:DeleteObject",
+                "s3:AbortMultipartUpload"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "ArnEquals": {
+                    "aws:PrincipalArn": "arn:aws:iam::123456789:role/SSM-EC2-Instance-Role"
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": [
+                "arn:aws:s3:::amazonlinux.us-east-1.amazonaws.com/*",
+                "arn:aws:s3:::amazonlinux-2-repos-us-east-1/*",
+                "arn:aws:s3:::packages.us-east-1.amazonaws.com/*",
+                "arn:aws:s3:::repo.us-east-1.amazonaws.com/*"
+            ]
+        }
+    ]
+}

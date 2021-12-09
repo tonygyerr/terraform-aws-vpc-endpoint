@@ -1,0 +1,35 @@
+{
+    "Version": "2012-10-17",
+    "Id": "Policy1639006653324",
+    "Statement": [
+        {
+            "Sid": "Stmt1639006650702",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": [
+                "s3:Get*",
+                "s3:Put*",
+                "s3:List*",
+                "s3:DeleteObject",
+                "s3:AbortMultipartUpload"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "ArnEquals": {
+                    "aws:PrincipalArn": "arn:aws:iam::${account_id}:role/${aws_role}"
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": [
+                "arn:aws:s3:::amazonlinux.${aws_region}.amazonaws.com/*",
+                "arn:aws:s3:::amazonlinux-2-repos-${aws_region}/*",
+                "arn:aws:s3:::packages.${aws_region}.amazonaws.com/*",
+                "arn:aws:s3:::repo.${aws_region}.amazonaws.com/*"
+            ]
+        }
+    ]
+}

@@ -1,3 +1,21 @@
+variable "aws_region" {
+  description = "ec2 region for the vpc"
+  type        = string
+  default     = ""
+}
+
+variable "aws_role" {
+  description = "The name of the role assuming access"
+  type        = string
+  default     = ""
+}
+
+variable "account_id" {
+  description = "The aws account id number"
+  type        = string
+  default     = ""
+}
+
 variable "vpc_config" {
   description = "configuration option for vpc"
   type        = map(string)
@@ -49,4 +67,9 @@ variable "tags" {
   type        = map(string)
   description = "optional default tags"
   default     = {}
+}
+
+variable "bucket_policy" {
+  type        = string
+  default     = ""
 }
