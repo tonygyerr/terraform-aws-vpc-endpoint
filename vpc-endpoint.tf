@@ -1,7 +1,7 @@
 resource "aws_vpc_endpoint" "this" {
   for_each = var.endpoints
 
-  vpc_id            = var.var_config.vpc_id
+  vpc_id            = var.vpc_config.vpc_id
   service_name      = data.aws_vpc_endpoint_service.this[each.key].service_name
   vpc_endpoint_type = lookup(each.value, "service_type", "Interface")
   auto_accept       = lookup(each.value, "auto_accept", null)
