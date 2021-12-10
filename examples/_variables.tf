@@ -16,6 +16,12 @@ variable "account_id" {
   default     = ""
 }
 
+variable "vpc_id" {
+  description = "The VPC ID"
+  type        = string
+  default     = ""
+}
+
 variable "vpc_config" {
   description = "configuration option for vpc"
   type        = map(string)
@@ -45,18 +51,6 @@ variable "subnet_ids" {
   default     = []
 }
 
-variable "private_route_table_ids" {
-  description = "Private Route Table ids"
-  type        = list(string)
-  default     = []
-}
-
-variable "public_route_table_ids" {
-  description = "Public Route Table ids"
-  type        = list(string)
-  default     = []
-}
-
 variable "extra_tags" {
   type        = map(string)
   description = "optional default tags"
@@ -72,4 +66,10 @@ variable "tags" {
 variable "bucket_policy" {
   type        = string
   default     = ""
+}
+
+variable "security_group_ids" {
+  description = "Security Group IDs to associate with the VPC endpoints"
+  type        = list(string)
+  default     = []
 }

@@ -16,6 +16,12 @@ variable "account_id" {
   default     = ""
 }
 
+variable "vpc_id" {
+  description = "The VPC ID"
+  type        = string
+  default     = ""
+}
+
 variable "vpc_config" {
   description = "configuration option for vpc"
   type        = map(string)
@@ -37,6 +43,12 @@ variable "app_name" {
   type        = string
   description = "Application Name"
   default     = ""
+}
+
+variable "security_group_ids" {
+  description = "Security Group IDs to associate with the VPC endpoints"
+  type        = list(string)
+  default     = []
 }
 
 variable "subnet_ids" {
