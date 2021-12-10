@@ -1,13 +1,42 @@
+variable "aws_region" {
+  description = "ec2 region for the vpc"
+  type        = string
+  default     = ""
+} 
+
+variable "aws_role" {
+  description = "The name of the role assuming access"
+  type        = string
+  default     = ""
+}
+
+variable "account_id" {
+  description = "The aws account id number"
+  type        = string
+  default     = ""
+}
+
+variable "vpc_config" {
+  description = "configuration option for vpc"
+  type        = map(string)
+}
+
+variable "endpoints" {
+  description = "A map of interface and/or gateway endpoints containing their properties and configurations"
+  type        = any
+  default     = {}
+}
+
 variable "create" {
   description = "Determines whether resources will be created"
   type        = bool
-  default     = true
+  default     = null
 }
 
-variable "vpc_id" {
-  description = "The ID of the VPC in which the endpoint will be used"
+variable "app_name" {
   type        = string
-  default     = null
+  description = "Application Name"
+  default     = ""
 }
 
 variable "subnet_ids" {
@@ -28,26 +57,19 @@ variable "public_route_table_ids" {
   default     = []
 }
 
-variable "endpoints" {
-  description = "A map of interface and/or gateway endpoints containing their properties and configurations"
-  type        = any
+variable "extra_tags" {
+  type        = map(string)
+  description = "optional default tags"
   default     = {}
-}
-
-variable "security_group_ids" {
-  description = "Default security group IDs to associate with the VPC endpoints"
-  type        = list(string)
-  default     = []
 }
 
 variable "tags" {
-  description = "A map of tags to use on all resources"
   type        = map(string)
+  description = "optional default tags"
   default     = {}
 }
 
-variable "timeouts" {
-  description = "Define maximum timeout for creating, updating, and deleting VPC endpoint resources"
-  type        = map(string)
-  default     = {}
+variable "bucket_policy" {
+  type        = string
+  default     = ""
 }
