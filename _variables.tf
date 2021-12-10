@@ -73,3 +73,9 @@ variable "bucket_policy" {
   type        = string
   default     = ""
 }
+
+variable "timeouts" {
+  description = "Define maximum timeout for creating, updating, and deleting VPC endpoint resources"
+  type        = map(string)
+  default     = {}
+}
