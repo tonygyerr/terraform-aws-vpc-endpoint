@@ -1,7 +1,7 @@
 data "aws_caller_identity" "current" {}
 
 data "aws_route_tables" "public" {
-  vpc_id = var.vpc_id
+  vpc_id = var.vpc_config.vpc_id
 
   filter {
     name   = "tag:Name"
@@ -10,7 +10,7 @@ data "aws_route_tables" "public" {
 }
 
 data "aws_route_tables" "private" {
-  vpc_id = var.vpc_id
+  vpc_id = var.vpc_config.vpc_id
 
   filter {
     name   = "tag:Name"
