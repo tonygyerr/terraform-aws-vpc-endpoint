@@ -2,16 +2,14 @@ module "endpoints" {
   source = "git::https://github.com/tonygyerr/terraform-aws-vpc-endpoint.git"
 
   create             = var.create
-  
-  vpc_id             = var.vpc_config.vpc_id
-  security_group_ids = [aws_security_group.vpce.id]
+  vpc_config         = var.vpc_config
 
   endpoints = {
     dynamodb = {
       service = "dynamodb"
       private_dns_enabled = false
       service_type    = "Gateway"
-      route_table_ids = data.aws_route_tables.private.id
+      route_table_ids = [data.aws_route_tables.private.id]
       tags            = { Name = "${var.app_name}-dynamodb-vpc-endpoint" }
     },
     ec2 = {
@@ -60,7 +58,7 @@ module "endpoints" {
       service         = "s3"
       private_dns_enabled = false
       service_type    = "Gateway"
-      route_table_ids = data.aws_route_tables.private.id
+      route_table_ids = [data.aws_route_tables.private.id]
       policy          = templatefile("${path.module}/${var.bucket_policy}", {
         aws_region           = jsonencode(var.aws_region),
         account_id           = jsonencode(data.aws_caller_identity.current.account_id),
