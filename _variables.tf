@@ -4,6 +4,12 @@ variable "aws_region" {
   default     = ""
 } 
 
+variable "profile" {
+  description = "The name of the aws profile"
+  type        = string
+  default     = ""
+}
+
 variable "aws_role" {
   description = "The name of the role assuming access"
   type        = string

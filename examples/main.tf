@@ -3,7 +3,7 @@ module "endpoints" {
 
   create             = var.create
   vpc_config         = var.vpc_config
-
+  profile            = var.profile
   endpoints = {
     dynamodb = {
       service = "dynamodb"
