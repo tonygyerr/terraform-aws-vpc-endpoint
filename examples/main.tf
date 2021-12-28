@@ -4,6 +4,7 @@ module "endpoints" {
   create             = var.create
   vpc_config         = var.vpc_config
   profile            = var.profile
+  aws_region         = var.aws_region # var.region
   endpoints = {
     dynamodb = {
       service = "dynamodb"

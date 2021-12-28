@@ -1,7 +1,7 @@
 variable "profile" {
   description = "The name of the aws profile"
   type        = string
-  default     = ""
+  # default     = ""
 }
 
 variable "aws_region" {
